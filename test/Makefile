@@ -4,9 +4,13 @@ LDFLAGS +=
 .PHONY: all clean
 
 all: \
-  test_strlen
+  test_strlen \
+  test_strcmpeq
 
 test_strlen: test_strlen.o strlen_sse2.o strlen_sse4.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+test_strcmpeq: test_strcmpeq.o strcmpeq_sse2.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 test_%.o: test_%.c
@@ -17,4 +21,5 @@ str%.o: ../lib/str%.asm
 
 clean:
 	rm -f *.o \
-	  test_strlen
+	  test_strlen \
+	  test_strcmpeq
