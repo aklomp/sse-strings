@@ -6,7 +6,7 @@ LDFLAGS +=
 all: \
   test_strlen
 
-test_strlen: test_strlen.o strlen_sse2.o
+test_strlen: test_strlen.o strlen_sse2.o strlen_sse4.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 test_%.o: test_%.c

@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "../include/strlen_sse2.h"
+#include "../include/strlen_sse4.h"
 
 static int
 test_strlen (const char *name, size_t (*mystrlen)(const char *s))
@@ -30,6 +31,9 @@ main ()
 
 	if (__builtin_cpu_supports("sse2")) {
 		ret |= test_strlen("strlen_sse2", strlen_sse2);
+	}
+	if (__builtin_cpu_supports("sse4.2")) {
+		ret |= test_strlen("strlen_sse4", strlen_sse4);
 	}
 	return ret;
 }
