@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../include/strcmpeq_x64.h"
 #include "../include/strcmpeq_sse2.h"
 #include "../include/strcmpeq_sse4.h"
 
@@ -43,6 +44,8 @@ int
 main ()
 {
 	int ret = 0;
+
+	ret |= test_strcmpeq("strcmpeq_x64", strcmpeq_x64);
 
 	if (__builtin_cpu_supports("sse2")) {
 		ret |= test_strcmpeq("strcmpeq_sse2", strcmpeq_sse2);
