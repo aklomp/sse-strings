@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "../include/strcmpeq_sse2.h"
+#include "../include/strcmpeq_sse4.h"
 
 static int
 strcmpeq_ref (const char *a, const char *b)
@@ -45,6 +46,9 @@ main ()
 
 	if (__builtin_cpu_supports("sse2")) {
 		ret |= test_strcmpeq("strcmpeq_sse2", strcmpeq_sse2);
+	}
+	if (__builtin_cpu_supports("sse4.2")) {
+		ret |= test_strcmpeq("strcmpeq_sse4", strcmpeq_sse4);
 	}
 	return ret;
 }
