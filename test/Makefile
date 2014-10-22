@@ -5,10 +5,14 @@ LDFLAGS +=
 
 all: \
   test_strlen \
+  test_strcmp \
   test_strcmpeq \
   test_strcasecmpeq
 
 test_strlen: test_strlen.o strlen_sse2.o strlen_sse4.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+test_strcmp: test_strcmp.o strcmp_x64.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 test_strcmpeq: test_strcmpeq.o strcmpeq_x64.o strcmpeq_sse2.o strcmpeq_sse4.o
@@ -26,5 +30,6 @@ str%.o: ../lib/str%.asm
 clean:
 	rm -f *.o \
 	  test_strlen \
+	  test_strcmp \
 	  test_strcmpeq \
 	  test_strcasecmpeq
