@@ -1,5 +1,7 @@
+#include <stdbool.h>
 #include <stdio.h>
 
+#include "sse_level.h"
 #include "../include/strlen_sse2.h"
 #include "../include/strlen_sse4.h"
 
@@ -29,11 +31,15 @@ main ()
 {
 	int ret = 0;
 
-	if (__builtin_cpu_supports("sse2")) {
+	if (have_sse2()) {
 		ret |= test_strlen("strlen_sse2", strlen_sse2);
 	}
-	if (__builtin_cpu_supports("sse4.2")) {
+	else puts("WARN: not testing SSE2 routines");
+
+	if (have_sse42()) {
 		ret |= test_strlen("strlen_sse4", strlen_sse4);
 	}
+	else puts("WARN: not testing SSE4.2 routines");
+
 	return ret;
 }

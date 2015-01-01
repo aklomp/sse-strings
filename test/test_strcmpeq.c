@@ -1,6 +1,8 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "sse_level.h"
 #include "../include/strcmpeq_x64.h"
 #include "../include/strcmpeq_sse2.h"
 #include "../include/strcmpeq_sse4.h"
@@ -47,11 +49,15 @@ main ()
 
 	ret |= test_strcmpeq("strcmpeq_x64", strcmpeq_x64);
 
-	if (__builtin_cpu_supports("sse2")) {
+	if (have_sse2()) {
 		ret |= test_strcmpeq("strcmpeq_sse2", strcmpeq_sse2);
 	}
-	if (__builtin_cpu_supports("sse4.2")) {
+	else puts("WARN: not testing SSE2 routines");
+
+	if (have_sse42()) {
 		ret |= test_strcmpeq("strcmpeq_sse4", strcmpeq_sse4);
 	}
+	else puts("WARN: not testing SSE4.2 routines");
+
 	return ret;
 }

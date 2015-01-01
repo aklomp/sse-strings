@@ -1,7 +1,9 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
 
+#include "sse_level.h"
 #include "../include/strcasecmpeq_sse2.h"
 
 static int
@@ -44,8 +46,10 @@ main ()
 {
 	int ret = 0;
 
-	if (__builtin_cpu_supports("sse2")) {
+	if (have_sse2()) {
 		ret |= test_strcasecmpeq("strcasecmpeq_sse2", strcasecmpeq_sse2);
 	}
+	else puts("WARN: not testing SSE2 routines");
+
 	return ret;
 }
