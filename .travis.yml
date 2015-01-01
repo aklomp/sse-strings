@@ -1,0 +1,11 @@
+language: c
+
+compiler:
+  - clang
+  - gcc
+
+install:
+  - sudo apt-get install nasm
+
+script:
+  - make -C test test
