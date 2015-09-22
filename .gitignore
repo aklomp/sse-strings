@@ -1,1 +1,5 @@
 *.o
+test/test_strcasecmpeq
+test/test_strcmp
+test/test_strcmpeq
+test/test_strlen
