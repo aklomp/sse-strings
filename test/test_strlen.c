@@ -26,20 +26,33 @@ test_strlen (const char *name, size_t (*mystrlen)(const char *s))
 	return 0;
 }
 
+static int
+test_sse2 (void)
+{
+	if (have_sse2()) {
+		return test_strlen("strlen_sse2", strlen_sse2);
+	}
+	puts("WARN: not testing SSE2 routines");
+	return 0;
+}
+
+static int
+test_sse4 (void)
+{
+	if (have_sse42()) {
+		return test_strlen("strlen_sse4", strlen_sse4);
+	}
+	puts("WARN: not testing SSE4.2 routines");
+	return 0;
+}
+
 int
 main ()
 {
 	int ret = 0;
 
-	if (have_sse2()) {
-		ret |= test_strlen("strlen_sse2", strlen_sse2);
-	}
-	else puts("WARN: not testing SSE2 routines");
-
-	if (have_sse42()) {
-		ret |= test_strlen("strlen_sse4", strlen_sse4);
-	}
-	else puts("WARN: not testing SSE4.2 routines");
+	ret |= test_sse2();
+	ret |= test_sse4();
 
 	return ret;
 }

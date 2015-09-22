@@ -41,15 +41,22 @@ test_strcasecmpeq (const char *name, int (*mystrcasecmpeq)(const char *a, const 
 	return 0;
 }
 
+static int
+test_sse2()
+{
+	if (have_sse2()) {
+		return test_strcasecmpeq("strcasecmpeq_sse2", strcasecmpeq_sse2);
+	}
+	puts("WARN: not testing SSE2 routines");
+	return 0;
+}
+
 int
 main ()
 {
 	int ret = 0;
 
-	if (have_sse2()) {
-		ret |= test_strcasecmpeq("strcasecmpeq_sse2", strcasecmpeq_sse2);
-	}
-	else puts("WARN: not testing SSE2 routines");
+	ret |= test_sse2();
 
 	return ret;
 }

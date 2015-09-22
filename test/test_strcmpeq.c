@@ -42,22 +42,40 @@ test_strcmpeq (const char *name, int (*mystrcmpeq)(const char *a, const char *b)
 	return 0;
 }
 
+static int
+test_x64 (void)
+{
+	return test_strcmpeq("strcmpeq_x64", strcmpeq_x64);
+}
+
+static int
+test_sse2 (void)
+{
+	if (have_sse2()) {
+		return test_strcmpeq("strcmpeq_sse2", strcmpeq_sse2);
+	}
+	puts("WARN: not testing SSE2 routines");
+	return 0;
+}
+
+static int
+test_sse4 (void)
+{
+	if (have_sse42()) {
+		return test_strcmpeq("strcmpeq_sse4", strcmpeq_sse4);
+	}
+	puts("WARN: not testing SSE4.2 routines");
+	return 0;
+}
+
 int
 main ()
 {
 	int ret = 0;
 
-	ret |= test_strcmpeq("strcmpeq_x64", strcmpeq_x64);
-
-	if (have_sse2()) {
-		ret |= test_strcmpeq("strcmpeq_sse2", strcmpeq_sse2);
-	}
-	else puts("WARN: not testing SSE2 routines");
-
-	if (have_sse42()) {
-		ret |= test_strcmpeq("strcmpeq_sse4", strcmpeq_sse4);
-	}
-	else puts("WARN: not testing SSE4.2 routines");
+	ret |= test_x64();
+	ret |= test_sse2();
+	ret |= test_sse4();
 
 	return ret;
 }
