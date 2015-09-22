@@ -1,7 +1,14 @@
-CFLAGS += -std=c99 -Wall -Wextra -Werror
+CFLAGS += -std=c99 -Wall -Wextra -Werror -pedantic
 LDFLAGS +=
 
 .PHONY: all test clean
+
+# This target rebuilds all tests and runs them:
+test: clean all
+	./test_strlen
+	./test_strcmp
+	./test_strcmpeq
+	./test_strcasecmpeq
 
 all: \
   test_strlen \
@@ -29,13 +36,6 @@ str%.o: ../lib/str%.asm
 
 sse_level.o: sse_level.c
 	$(CC) $(CFLAGS) -o $@ -c $^
-
-# This target rebuilds all tests and runs them:
-test: clean all
-	./test_strlen
-	./test_strcmp
-	./test_strcmpeq
-	./test_strcasecmpeq
 
 clean:
 	rm -f *.o \
