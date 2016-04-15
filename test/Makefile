@@ -1,20 +1,22 @@
-CFLAGS += -std=c99 -Wall -Wextra -Werror -pedantic
+CFLAGS  += -std=c99 -Wall -Wextra -Werror -pedantic
 LDFLAGS +=
+
+PROGS = \
+  test_strlen \
+  test_strcmp \
+  test_strcmpeq \
+  test_strcasecmpeq \
 
 .PHONY: all test clean
 
-# This target rebuilds all tests and runs them:
+# The default target rebuilds all tests and runs them:
 test: clean all
 	./test_strlen
 	./test_strcmp
 	./test_strcmpeq
 	./test_strcasecmpeq
 
-all: \
-  test_strlen \
-  test_strcmp \
-  test_strcmpeq \
-  test_strcasecmpeq
+all: $(PROGS)
 
 test_strlen: test_strlen.o strlen_sse2.o strlen_sse4.o sse_level.o
 	$(CC) $(LDFLAGS) -o $@ $^
@@ -38,8 +40,4 @@ sse_level.o: sse_level.c
 	$(CC) $(CFLAGS) -o $@ -c $^
 
 clean:
-	rm -f *.o \
-	  test_strlen \
-	  test_strcmp \
-	  test_strcmpeq \
-	  test_strcasecmpeq
+	rm -f *.o $(PROGS)
