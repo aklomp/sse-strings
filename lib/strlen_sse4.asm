@@ -2,15 +2,12 @@ global strlen_sse4:function
 
 strlen_sse4:
 
-	mov        rax, -16
+	xor        eax, eax
 	pxor       xmm0, xmm0
 
-.loop:	; Must perform addition before the string comparison;
-	; doing it after would interfere with the status flags:
+.loop:	pcmpistri  xmm0, [rdi + rax], 0x08	; EQUAL_EACH
+	lea        rax, [rax + 16]		; inc offset without touching flags
+	jnz        .loop			; branch based on pcmpistri's flags
 
-	add        rax, 16
-	pcmpistri  xmm0, [rdi + rax], 0x08	; EQUAL_EACH
-	jnz        .loop
-
-	add        rax, rcx
+	lea        rax, [rax + rcx - 16]	; subtract spurious final increment
 	ret
