@@ -39,7 +39,7 @@ $(PROGS):
 	@printf "  CC    $@\n"
 	$(Q)$(CC) $(CFLAGS) -o $@ -c $^
 
-str%.o: ../lib/str%.asm
+str%.o: ../src/str%.asm
 	@printf "  NASM  $@\n"
 	$(Q)nasm -f elf64 -o $@ $^
 
