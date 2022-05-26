@@ -1,0 +1,21 @@
+name: Test
+
+on: [push]
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cc: [gcc, clang]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install nasm
+    - name: Run tests
+      env:
+        CC: ${{matrix.cc}}
+      run: make -C test
