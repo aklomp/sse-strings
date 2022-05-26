@@ -1,4 +1,3 @@
-extern _GLOBAL_OFFSET_TABLE_
 global aldiff:data 16
 global uppera:data 16
 global upperz:data 16
@@ -24,9 +23,9 @@ strcasecmpeq_sse2:
 	xor	rdx, rdx
 	pxor	xmm0, xmm0
 
-	movdqa	xmm3, [rel uppera wrt ..got]
-	movdqa	xmm4, [rel upperz wrt ..got]
-	movdqa	xmm5, [rel aldiff wrt ..got]
+	movdqa	xmm3, [rel uppera]
+	movdqa	xmm4, [rel upperz]
+	movdqa	xmm5, [rel aldiff]
 
 .loop:	movdqu	xmm1, [rdi + rdx]	; load strings
 	movdqu	xmm2, [rsi + rdx]
