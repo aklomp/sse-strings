@@ -18,4 +18,5 @@ jobs:
     - name: Run tests
       env:
         CC: ${{matrix.cc}}
-      run: cd test && make
+      working-directory: test
+      run: make
