@@ -20,13 +20,13 @@ test_strcasecmpeq (const char *name, int (*mystrcasecmpeq)(const char *a, const 
 	char b1[50], b2[50];
 
 	// Generate 50 * 50 strings:
-	for (int i = 0; i < 50; i++) {
-		for (int k = 0; k < i; k++) {
+	for (size_t i = 0; i < sizeof (b1); i++) {
+		for (size_t k = 0; k < i; k++) {
 			b1[k] = 'A' + i;
 		}
 		b1[i] = '\0';
-		for (int j = 0; j < 50; j++) {
-			for (int k = 0; k < j; k++) {
+		for (size_t j = 0; j < sizeof (b2); j++) {
+			for (size_t k = 0; k < j; k++) {
 				b2[k] = 'a' + j;
 			}
 			b2[j] = '\0';

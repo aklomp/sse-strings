@@ -8,18 +8,18 @@
 static int
 test_strlen (const char *name, size_t (*mystrlen)(const char *s))
 {
-	int got;
+	size_t got;
 	char buf[50];
 
 	// Test strings of various known length:
-	for (int i = 0; i < 50; i++) {
-		for (int j = 0; j < i; j++) {
+	for (size_t i = 0; i < sizeof (buf); i++) {
+		for (size_t j = 0; j < i; j++) {
 			buf[j] = 'A';
 		}
 		buf[i] = '\0';
 
 		if ((got = mystrlen(buf)) != i) {
-			printf("FAIL: %s: '%s': expected %d, got %d\n", name, buf, i, got);
+			printf("FAIL: %s: '%s': expected %zu, got %zu\n", name, buf, i, got);
 			return 1;
 		}
 	}
